@@ -141,9 +141,6 @@ export const post: APIRoute = async context => {
     const encoder = new TextEncoder()
     const decoder = new TextDecoder()
 
-
-    
-
     const rawRes = await fetchWithTimeout(
       `https://${baseURL}/v1/chat/completions`,
       {
@@ -162,13 +159,10 @@ export const post: APIRoute = async context => {
         })
       }
     ).catch(err => {
-      // console.log(`https://${baseURL}/v1/chat/completions`);
-
-      
       return new Response(
         JSON.stringify({
           error: {
-            message: `https://${baseURL}/v1/chat/completions`
+            message: err.message
           }
         }),
         { status: 500 }
