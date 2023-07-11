@@ -90,9 +90,7 @@ export const post: APIRoute = async context => {
       openaiAPIUrl
     } = body
 
-    const baseURL = openaiAPIUrl.replace(
-      /^https?:\/\//,
-      "")
+    const baseURL = openaiAPIUrl.replace(/^https?:\/\//, "") === 'api.openai.com' ? `api.openai.com/v1/chat/completions` : openaiAPIUrl;
 
     if (pwd && pwd !== password) {
       throw new Error("密码错误，请联系网站管理员。")
@@ -142,11 +140,11 @@ export const post: APIRoute = async context => {
     const decoder = new TextDecoder()
 
     const rawRes = await fetchWithTimeout(
-      `https://${baseURL}/v1/chat/completions`,
+      `https://${baseURL}`,
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`
+          Authorization: `Bearer ${`apiKey`}`
         },
         timeout: !timeout || Number.isNaN(timeout) ? 30000 : timeout,
         method: "POST",
