@@ -5,6 +5,8 @@ import type { ChatMessage, Model } from "~/types"
 import { countTokens } from "~/utils/tokens"
 import { splitKeys, randomKey, fetchWithTimeout } from "~/utils"
 import { defaultMaxInputTokens, defaultModel } from "~/system"
+import type { Setting } from "~/system"
+
 
 export const config = {
   runtime: "edge",
@@ -37,12 +39,13 @@ export const config = {
 
 export const localKey = import.meta.env.OPENAI_API_KEY || ""
 
-export const baseURL = import.meta.env.NOGFW
-  ? "api.openai.com"
-  : (import.meta.env.OPENAI_API_BASE_URL || "api.openai.com").replace(
-      /^https?:\/\//,
-      ""
-    )
+
+// export const baseURL = import.meta.env.NOGFW
+//   ? "api.openai.com"
+//   : ("api.openai.com").replace(
+//     /^https?:\/\//,
+//     ""
+//   )
 
 const timeout = Number(import.meta.env.TIMEOUT)
 
@@ -76,14 +79,20 @@ export const post: APIRoute = async context => {
       temperature: number
       password?: string
       model: Model
+      openaiAPIUrl: string
     } = await context.request.json()
     const {
       messages,
       key = localKey,
       temperature = 0.6,
       password,
-      model = defaultModel
+      model = defaultModel,
+      openaiAPIUrl
     } = body
+
+    const baseURL = openaiAPIUrl.replace(
+      /^https?:\/\//,
+      "")
 
     if (pwd && pwd !== password) {
       throw new Error("密码错误，请联系网站管理员。")

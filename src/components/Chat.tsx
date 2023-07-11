@@ -151,10 +151,9 @@ export default function (props: {
         const scrollHeight = inputRef?.scrollHeight
         if (scrollHeight)
           setHeight(
-            `${
-              scrollHeight > window.innerHeight - 64
-                ? window.innerHeight - 64
-                : scrollHeight
+            `${scrollHeight > window.innerHeight - 64
+              ? window.innerHeight - 64
+              : scrollHeight
             }px`
           )
       }
@@ -191,9 +190,9 @@ export default function (props: {
     if (
       !value ||
       value !==
-        messageList()
-          .filter(k => k.role === "user")
-          .at(-1)?.content
+      messageList()
+        .filter(k => k.role === "user")
+        .at(-1)?.content
     ) {
       setMessageList([
         ...messageList(),
@@ -237,13 +236,14 @@ export default function (props: {
       body: JSON.stringify({
         messages: setting().continuousDialogue
           ? [...messageList().slice(0, -1), message].filter(
-              k => k.role !== "error"
-            )
+            k => k.role !== "error"
+          )
           : [...messageList().filter(k => k.special === "locked"), message],
         key: setting().openaiAPIKey || undefined,
         temperature: setting().openaiAPITemperature / 100,
         password: setting().password,
-        model: setting().model
+        model: setting().model,
+        openaiAPIUrl: setting().openaiAPIUrl || 'api.openai.com'
       }),
       signal: controller.signal
     })
@@ -293,10 +293,9 @@ export default function (props: {
     const scrollHeight = inputRef?.scrollHeight
     if (scrollHeight)
       setHeight(
-        `${
-          scrollHeight > window.innerHeight - 64
-            ? window.innerHeight - 64
-            : scrollHeight
+        `${scrollHeight > window.innerHeight - 64
+          ? window.innerHeight - 64
+          : scrollHeight
         }px`
       )
     inputRef.focus()
@@ -327,10 +326,9 @@ export default function (props: {
     const scrollHeight = inputRef?.scrollHeight
     if (scrollHeight)
       setHeight(
-        `${
-          scrollHeight > window.innerHeight - 64
-            ? window.innerHeight - 64
-            : scrollHeight
+        `${scrollHeight > window.innerHeight - 64
+          ? window.innerHeight - 64
+          : scrollHeight
         }px`
       )
     if (!compositionend()) return

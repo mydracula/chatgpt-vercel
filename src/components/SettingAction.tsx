@@ -20,7 +20,7 @@ export default function SettingAction(props: {
   return (
     <div
       class="text-sm text-slate-7 dark:text-slate my-2"
-      use:clickOutside={() => setShown(false)}
+      use: clickOutside={() => setShown(false)}
     >
       <Show when={shown()}>
         <div class="<sm:max-h-10em max-h-14em overflow-y-auto">
@@ -137,6 +137,19 @@ export default function SettingAction(props: {
               />
               <div class="w-9 h-5 bg-slate bg-op-15 peer-focus:outline-none peer-focus:ring-0  rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-slate"></div>
             </label>
+          </SettingItem>
+          <SettingItem icon="i-carbon-lightning" label="接口地址">
+            <input
+              type="text"
+              value={props.setting().openaiAPIUrl}
+              class="max-w-150px ml-1em px-1 text-slate-7 dark:text-slate rounded-sm bg-slate bg-op-15 focus:bg-op-20 focus:ring-0 focus:outline-none"
+              onInput={e => {
+                props.setSetting({
+                  ...props.setting(),
+                  openaiAPIUrl: (e.target as HTMLInputElement).value
+                })
+              }}
+            />
           </SettingItem>
         </div>
         <hr class="my-1 bg-slate-5 bg-op-15 border-none h-1px"></hr>
