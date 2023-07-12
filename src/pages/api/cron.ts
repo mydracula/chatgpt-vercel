@@ -12,6 +12,7 @@ export const config = {
    * only for vercel
    */
   regions: [
+    "hkg1",
     "sin1",
     "kix1",
     "icn1",
